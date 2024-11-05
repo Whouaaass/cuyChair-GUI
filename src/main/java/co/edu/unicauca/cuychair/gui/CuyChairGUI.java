@@ -4,7 +4,7 @@
 
 package co.edu.unicauca.cuychair.gui;
 
-import co.edu.unicauca.cuychair.gui.views.MenuView;
+import co.edu.unicauca.cuychair.gui.views.EntryView;
 import javax.swing.JFrame;
 
 /**
@@ -22,7 +22,7 @@ public class CuyChairGUI {
      * Inicializa la aplicación
      */    
     public static void initApp() {
-        JFrame menu = new MenuView();  
+        JFrame menu = new EntryView();  
         menu.setVisible(true);        
     }
     

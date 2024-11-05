@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jMultilineLabel1" min="-2" pref="280" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="jMultilineLabel1" min="-2" pref="114" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="sansserif" size="18" style="0"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="Conference Title"/>
+      </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Conference Title"/>
+      </AccessibilityProperties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ver m&#xe1;s"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Mandar Articulo"/>
+      </Properties>
+    </Component>
+    <Component class="co.edu.unicauca.cuychair.gui.views.controllers.JMultilineLabel" name="jMultilineLabel1">
+      <Properties>
+        <Property name="columns" type="int" value="20"/>
+        <Property name="rows" type="int" value="5"/>
+        <Property name="text" type="java.lang.String" value="[Nombre de la Conferencia] es un evento anual que re&#xfa;ne a expertos, profesionales y entusiastas de [tema o industria] para compartir conocimientos, descubrir las &#xfa;ltimas tendencias y fomentar la colaboraci&#xf3;n. Durante [n&#xfa;mero de d&#xed;as] d&#xed;as, los asistentes podr&#xe1;n participar en una variedad de actividades, como presentaciones magistrales, sesiones interactivas, paneles de discusi&#xf3;n y talleres pr&#xe1;cticos, dise&#xf1;ados para profundizar en temas clave de [tema o industria].&#xa;&#xa;Con una selecci&#xf3;n de ponentes reconocidos a nivel nacional e internacional, esta conferencia ofrece una oportunidad &#xfa;nica para aprender de los l&#xed;deres de opini&#xf3;n y pioneros del sector. Adem&#xe1;s, los asistentes podr&#xe1;n expandir su red de contactos a trav&#xe9;s de sesiones de networking y eventos sociales, favoreciendo la creaci&#xf3;n de relaciones duraderas y oportunidades de colaboraci&#xf3;n.&#xa;&#xa;No importa si eres un profesional experimentado, un investigador acad&#xe9;mico o alguien que reci&#xe9;n comienza en el campo; [Nombre de la Conferencia] tiene algo para todos. &#xda;nete a nosotros para una experiencia enriquecedora que contribuir&#xe1; a tu crecimiento profesional y personal en [tema o industria].&#xa;&#xa;"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>

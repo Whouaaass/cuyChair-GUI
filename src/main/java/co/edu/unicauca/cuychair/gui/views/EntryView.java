@@ -12,12 +12,12 @@ import co.edu.unicauca.cuychair.gui.styledcontrols.StyledButtonUI;
  *
  * @author Frdy
  */
-public class MenuView extends javax.swing.JFrame {
+public class EntryView extends javax.swing.JFrame {
 
     /**
      * Creates new form MenuView
      */
-    public MenuView() {
+    public EntryView() {
         initComponents();        
         setUIs();
         
@@ -51,6 +51,7 @@ public class MenuView extends javax.swing.JFrame {
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("CuyChair Conference");
         setPreferredSize(new java.awt.Dimension(600, 350));
 
         BannerPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -58,9 +59,10 @@ public class MenuView extends javax.swing.JFrame {
 
         icon.setFont(new java.awt.Font("Ebrima", 0, 24)); // NOI18N
         icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        icon.setIcon(new javax.swing.ImageIcon("D:\\Universidad\\IngenieriaDeSoftwareII\\cuyChair-GUI\\src\\main\\resources\\images\\icon-md.png")); // NOI18N
+        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon-md.png"))); // NOI18N
 
         nameLabel.setFont(new java.awt.Font("Ebrima", 0, 24)); // NOI18N
+        nameLabel.setForeground(new java.awt.Color(112, 112, 112));
         nameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         nameLabel.setText("CuyChair Conference");
 
@@ -70,10 +72,9 @@ public class MenuView extends javax.swing.JFrame {
             BannerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BannerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(BannerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(icon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
                 .addContainerGap())
+            .addComponent(icon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         BannerPanelLayout.setVerticalGroup(
             BannerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,14 +83,14 @@ public class MenuView extends javax.swing.JFrame {
                 .addComponent(icon)
                 .addGap(18, 18, 18)
                 .addComponent(nameLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(152, Short.MAX_VALUE))
         );
 
         getContentPane().add(BannerPanel, java.awt.BorderLayout.CENTER);
 
         MainPanel.setLayout(new java.awt.BorderLayout());
 
-        userIconLabel.setIcon(new javax.swing.ImageIcon("D:\\Universidad\\IngenieriaDeSoftwareII\\cuyChair-GUI\\src\\main\\resources\\images\\personIcon.png")); // NOI18N
+        userIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/userIcon.png"))); // NOI18N
         InfoPanel.add(userIconLabel);
 
         userInfoLabel.setLayout(new javax.swing.BoxLayout(userInfoLabel, javax.swing.BoxLayout.Y_AXIS));
@@ -202,20 +203,21 @@ public class MenuView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EntryView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EntryView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EntryView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EntryView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuView().setVisible(true);
+                new EntryView().setVisible(true);
             }
         });
     }
