@@ -1,8 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package co.edu.unicauca.cuychair.gui.views.panels;
+
+import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 
 /**
  *
@@ -10,11 +14,31 @@ package co.edu.unicauca.cuychair.gui.views.panels;
  */
 public class ConferencePanel extends javax.swing.JPanel {
 
+    private List<Component> cards = new ArrayList<>();
+
     /**
      * Creates new form ConferencePanel
      */
     public ConferencePanel() {
+        System.out.println("Conference Panel loaded");
         initComponents();
+        testConferenceCards();
+    }
+
+    public void testConferenceCards() {
+        cards.add(new ConferenceCardPanel("Minecon", "this is great conference about Minecraft!!! <br> explore all the news about minecraft, and what it can possibly bring"));
+
+        cards.add(new ConferenceCardPanel("TechFuture Expo", "Explore the latest in technology and innovation. <br> Join us to see how the future of tech is unfolding!"));
+
+        cards.add(new ConferenceCardPanel("EcoSummit", "An inspiring event on sustainability and environmental innovation. <br> Learn how we can make a greener planet together."));
+
+        cards.add(new ConferenceCardPanel("AI & Robotics Summit", "Dive into the world of AI and robotics! <br> See groundbreaking advancements and future possibilities."));
+
+        cards.add(new ConferenceCardPanel("Medical Breakthroughs", "Join top researchers in healthcare and medicine. <br> Discover the latest in medical technology and innovation."));
+
+        cards.add(new ConferenceCardPanel("SpaceCon", "A stellar conference for space enthusiasts! <br> Explore new discoveries, missions, and the future of space exploration."));
+
+        this.populateContentPanel(calculateColumns(scrollPanel.getWidth()));
     }
 
     /**
@@ -26,11 +50,30 @@ public class ConferencePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        mainPanel = new javax.swing.JPanel();
+        scrollPanel = new javax.swing.JScrollPane();
+        contentPanel = new javax.swing.JPanel();
         optionsPanel = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
-        add(mainPanel, java.awt.BorderLayout.CENTER);
+
+        scrollPanel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPanel.setViewportView(contentPanel);
+        scrollPanel.setWheelScrollingEnabled(false);
+        scrollPanel.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                scrollPanelMouseWheelMoved(evt);
+            }
+        });
+        scrollPanel.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                scrollPanelComponentResized(evt);
+            }
+        });
+
+        contentPanel.setLayout(new java.awt.GridBagLayout());
+        scrollPanel.setViewportView(contentPanel);
+
+        add(scrollPanel, java.awt.BorderLayout.CENTER);
 
         optionsPanel.setPreferredSize(new java.awt.Dimension(150, 326));
 
@@ -42,15 +85,50 @@ public class ConferencePanel extends javax.swing.JPanel {
         );
         optionsPanelLayout.setVerticalGroup(
             optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 326, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         add(optionsPanel, java.awt.BorderLayout.LINE_END);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void scrollPanelComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_scrollPanelComponentResized
+        int columns = calculateColumns(scrollPanel.getWidth());
+        populateContentPanel(columns);
+    }//GEN-LAST:event_scrollPanelComponentResized
+
+    private void scrollPanelMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_scrollPanelMouseWheelMoved
+        JScrollBar verticalBar = scrollPanel.getVerticalScrollBar();
+        int scrollAmount = evt.getUnitsToScroll() * verticalBar.getUnitIncrement()*20;
+        verticalBar.setValue(verticalBar.getValue() + scrollAmount);
+    }//GEN-LAST:event_scrollPanelMouseWheelMoved
+
+    // Method to calculate the number of columns based on available width
+    private int calculateColumns(int availableWidth) {
+        return Math.max(1, availableWidth / (ConferenceCardPanel.WIDTH + 10)); // 10 is the gap between cards
+    }
+
+    private void populateContentPanel(int columns) {
+        contentPanel.removeAll();
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5); // Padding between cards
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+
+        for (int i = 0; i < cards.size(); i++) {
+            Component comp = cards.get(i);
+            gbc.gridx = i % columns; // Column index
+            gbc.gridy = i / columns; // Row index
+            contentPanel.add(comp, gbc);
+        }
+
+        contentPanel.revalidate(); // Refresh the layout
+        contentPanel.repaint();
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel mainPanel;
+    private javax.swing.JPanel contentPanel;
     private javax.swing.JPanel optionsPanel;
+    private javax.swing.JScrollPane scrollPanel;
     // End of variables declaration//GEN-END:variables
 }

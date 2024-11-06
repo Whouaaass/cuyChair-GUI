@@ -1,25 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package co.edu.unicauca.cuychair.gui.views;
 
+import co.edu.unicauca.cuychair.gui.views.panels.ConferencePanel;
+import co.edu.unicauca.cuychair.gui.views.panels.PapersPanel;
+import co.edu.unicauca.cuychair.gui.views.panels.ReviewPapersPanel;
+import java.awt.CardLayout;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JPanel;
 
 /**
  *
  * @author Frdy
  */
-public class MainView extends javax.swing.JFrame {  
-    
+public class MainView extends javax.swing.JFrame {
+
     private static SelectedView selectedView = null;
 
     /**
      * Creates new form NewJFrame
      */
-    public MainView() {
+    public MainView() {        
         initComponents();
-        this.setLocationRelativeTo(null);        
+        this.setLocationRelativeTo(null);
+    }
+    
+    public MainView(String viewId) {
+        SelectedView selection = SelectedView.valueOf(viewId);
+        initComponents();
+        setLocationRelativeTo(null);        
+        selectView(selection);
     }
 
     /**
@@ -64,12 +73,27 @@ public class MainView extends javax.swing.JFrame {
         InfoPanel.add(userInfoLabel);
 
         jButton1.setText("Ver Conferencias");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         navigationPanel.add(jButton1);
 
         jButton2.setText("Articulos Enviados");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         navigationPanel.add(jButton2);
 
         jButton3.setText("Revision de Articulos");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         navigationPanel.add(jButton3);
 
         javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
@@ -78,7 +102,7 @@ public class MainView extends javax.swing.JFrame {
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
                 .addComponent(InfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 247, Short.MAX_VALUE)
                 .addComponent(navigationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         headerPanelLayout.setVerticalGroup(
@@ -92,21 +116,23 @@ public class MainView extends javax.swing.JFrame {
 
         getContentPane().add(headerPanel, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout viewPanelLayout = new javax.swing.GroupLayout(viewPanel);
-        viewPanel.setLayout(viewPanelLayout);
-        viewPanelLayout.setHorizontalGroup(
-            viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 783, Short.MAX_VALUE)
-        );
-        viewPanelLayout.setVerticalGroup(
-            viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 354, Short.MAX_VALUE)
-        );
-
+        viewPanel.setLayout(new java.awt.CardLayout());
         getContentPane().add(viewPanel, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        selectView(SelectedView.CONFERENCE);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        selectView(SelectedView.PAPERS);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        selectView(SelectedView.REVIEW_PAPERS);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -118,7 +144,7 @@ public class MainView extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {                
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
@@ -143,14 +169,17 @@ public class MainView extends javax.swing.JFrame {
             }
         });
     }
-    
-    public void selectTab(SelectedView selectedView) {        
-        if (selectedView == this.selectedView) return;
-        
+
+    public void selectView(SelectedView selectedView) {        
+        CardLayout cardLay = (CardLayout) viewPanel.getLayout();
+        if (!selectedView.hasBeenGotted()) {
+            viewPanel.add(selectedView.getPanel(), selectedView.getId());
+        }
+        cardLay.show(viewPanel, selectedView.getId());
         this.selectedView = selectedView;
-        this.viewPanel.removeAll();
         
-        this.viewPanel.add(selectedView.getPanel());
+        viewPanel.validate();        
+        pack();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -167,20 +196,42 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JPanel viewPanel;
     // End of variables declaration//GEN-END:variables
 
-    // views to select in the tab
+    /**
+     * Enum to manage the view selected  <br>
+     * this implements lazy loading with the companion of the function `selectView()`
+     */
     private enum SelectedView {
-        CONFERENCE(null),
-        PAPERS(null),
-        REVIEW_PAPERS(null);
+        CONFERENCE("Conference"),
+        PAPERS("Papers"),
+        REVIEW_PAPERS("ReviewPapers");
         
-        private JPanel panel;
+        private final String id;
+        private JPanel panel; // panel seleccionado
         
-        private SelectedView(JPanel panel) {
-            this.panel = panel;
+        private static Map<String, JPanel> panelsGotted = new HashMap<>(3);
+
+        private SelectedView(String id) {
+            this.id = id;
+            panel = null;                 
         }
         
         public JPanel getPanel() {
-            return this.panel;
+            if (panelsGotted.containsKey(id)) return panel;
+            switch (id) {
+                case "Conference" -> panel = new ConferencePanel();
+                case "Papers" -> panel = new PapersPanel();
+                case "ReviewPapers" -> panel = new ReviewPapersPanel();
+            }
+            panelsGotted.put(id, panel);
+            return panel;
+        }
+        
+        public boolean hasBeenGotted() {
+            return panelsGotted.containsKey(id);
+        }
+        
+        public String getId() {
+            return id;
         }
     }
 

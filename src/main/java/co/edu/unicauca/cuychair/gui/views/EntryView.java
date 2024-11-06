@@ -2,6 +2,7 @@ package co.edu.unicauca.cuychair.gui.views;
 
 
 import co.edu.unicauca.cuychair.gui.styledcontrols.StyledButtonUI;
+import javax.swing.JFrame;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -176,14 +177,25 @@ public class EntryView extends javax.swing.JFrame {
     
     private void goReviewPapersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goReviewPapersButtonActionPerformed
         System.out.println("Going to Review Papers");
+        JFrame mainView = new MainView("REVIEW_PAPERS");
+        
+        mainView.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_goReviewPapersButtonActionPerformed
 
     private void goPapersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goPapersButtonActionPerformed
         System.out.println("Going to Papers");
+        JFrame mainView = new MainView("PAPERS");
+        mainView.setVisible(true);
+        this.dispose();        
     }//GEN-LAST:event_goPapersButtonActionPerformed
 
     private void goConferencesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goConferencesButtonActionPerformed
         System.out.println("Going to Conference");
+        JFrame mainView = new MainView("CONFERENCE");
+        
+        mainView.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_goConferencesButtonActionPerformed
 
     /**
