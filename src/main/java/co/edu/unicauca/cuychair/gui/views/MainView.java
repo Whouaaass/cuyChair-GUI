@@ -3,6 +3,8 @@ package co.edu.unicauca.cuychair.gui.views;
 import co.edu.unicauca.cuychair.gui.views.panels.ConferencePanel;
 import co.edu.unicauca.cuychair.gui.views.panels.PapersPanel;
 import co.edu.unicauca.cuychair.gui.views.panels.ReviewPapersPanel;
+import co.edu.unicauca.cuychair.gui.views.test.AuthorPanel;
+import co.edu.unicauca.cuychair.gui.views.test.ReviewPanel;
 import java.awt.CardLayout;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +16,7 @@ import javax.swing.JPanel;
  */
 public class MainView extends javax.swing.JFrame {
 
-    private static SelectedView selectedView = null;
+    private SelectedView selectedView = null;
 
     /**
      * Creates new form NewJFrame
@@ -137,40 +139,12 @@ public class MainView extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainView().setVisible(true);
-            }
-        });
+    public static void main(String args[]) {        
+                
+        java.awt.EventQueue.invokeLater(() -> new MainView().setVisible(true));
     }
 
-    public void selectView(SelectedView selectedView) {        
+    private void selectView(SelectedView selectedView) {        
         CardLayout cardLay = (CardLayout) viewPanel.getLayout();
         if (!selectedView.hasBeenGotted()) {
             viewPanel.add(selectedView.getPanel(), selectedView.getId());
@@ -211,7 +185,7 @@ public class MainView extends javax.swing.JFrame {
         private final String id;
         private JPanel panel; // panel seleccionado
         
-        private static Map<String, JPanel> panelsGotted = new HashMap<>(3);
+        private final static Map<String, JPanel> panelsGotted = new HashMap<>(3);
 
         private SelectedView(String id) {
             this.id = id;
@@ -222,8 +196,8 @@ public class MainView extends javax.swing.JFrame {
             if (panelsGotted.containsKey(id)) return panel;
             switch (id) {
                 case "Conference" -> panel = new ConferencePanel();
-                case "Papers" -> panel = new PapersPanel();
-                case "ReviewPapers" -> panel = new ReviewPapersPanel();
+                case "Papers" -> panel = new AuthorPanel();
+                case "ReviewPapers" -> panel = new ReviewPanel();//new ReviewPapersPanel();
             }
             panelsGotted.put(id, panel);
             return panel;

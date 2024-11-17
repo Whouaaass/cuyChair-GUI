@@ -4,9 +4,14 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import javax.swing.JPanel;
+
+import javax.swing.JComponent;
 import javax.swing.JScrollBar;
+
+import co.edu.unicauca.cuychair.gui.domain.Conference;
+import co.edu.unicauca.cuychair.gui.views.test.ConferenceCard;
 
 /**
  *
@@ -14,7 +19,7 @@ import javax.swing.JScrollBar;
  */
 public class ConferencePanel extends javax.swing.JPanel {
 
-    private List<Component> cards = new ArrayList<>();
+    private final List<JComponent> cards = new ArrayList<>();
 
     /**
      * Creates new form ConferencePanel
@@ -25,18 +30,20 @@ public class ConferencePanel extends javax.swing.JPanel {
         testConferenceCards();
     }
 
-    public void testConferenceCards() {
-        cards.add(new ConferenceCardPanel("Minecon", "this is great conference about Minecraft!!! <br> explore all the news about minecraft, and what it can possibly bring"));
+    public final void testConferenceCards() {
+        cards.add(new ConferenceCard(new Conference("IAS", "No se que es esto", new Date(), "more IAS", "More IAs")));
 
-        cards.add(new ConferenceCardPanel("TechFuture Expo", "Explore the latest in technology and innovation. <br> Join us to see how the future of tech is unfolding!"));
+        cards.add(new ConferenceCard(new Conference("Minecon", "this is great conference about Minecraft!!! <br> explore all the news about minecraft, and what it can possibly bring", new Date(), "more Minecon", "More Minecon")));
 
-        cards.add(new ConferenceCardPanel("EcoSummit", "An inspiring event on sustainability and environmental innovation. <br> Learn how we can make a greener planet together."));
+        cards.add(new ConferenceCard(new Conference("TechFuture Expo", "Explore the latest in technology and innovation. <br> Join us to see how the future of tech is unfolding!", new Date(), "more TechFuture Expo", "More TechFuture Expo")));
 
-        cards.add(new ConferenceCardPanel("AI & Robotics Summit", "Dive into the world of AI and robotics! <br> See groundbreaking advancements and future possibilities."));
+        cards.add(new ConferenceCard(new Conference("EcoSummit", "An inspiring event on sustainability and environmental innovation. <br> Learn how we can make a greener planet together.", new Date(), "more EcoSummit", "More EcoSummit")));
 
-        cards.add(new ConferenceCardPanel("Medical Breakthroughs", "Join top researchers in healthcare and medicine. <br> Discover the latest in medical technology and innovation."));
+        cards.add(new ConferenceCard(new Conference("AI & Robotics Summit", "Dive into the world of AI and robotics! <br> See groundbreaking advancements and future possibilities.", new Date(), "more AI & Robotics Summit", "More AI & Robotics Summit")));
 
-        cards.add(new ConferenceCardPanel("SpaceCon", "A stellar conference for space enthusiasts! <br> Explore new discoveries, missions, and the future of space exploration."));
+        cards.add(new ConferenceCard(new Conference("Medical Breakthroughs", "Join top researchers in healthcare and medicine. <br> Discover the latest in medical technology and innovation.", new Date(), "more Medical Breakthroughs", "More Medical Breakthroughs")));
+
+        cards.add(new ConferenceCard(new Conference("SpaceCon", "A stellar conference for space enthusiasts! <br> Explore new discoveries, missions, and the future of space exploration.", new Date(), "more SpaceCon", "More SpaceCon")));
 
         this.populateContentPanel(calculateColumns(scrollPanel.getWidth()));
     }

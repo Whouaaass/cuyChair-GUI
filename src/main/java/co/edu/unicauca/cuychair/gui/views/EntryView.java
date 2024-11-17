@@ -1,16 +1,10 @@
 package co.edu.unicauca.cuychair.gui.views;
 
-
 import co.edu.unicauca.cuychair.gui.styledcontrols.StyledButtonUI;
 import javax.swing.JFrame;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
 /**
- *
+ * Vista de entrada a la aplicación
  * @author Frdy
  */
 public class EntryView extends javax.swing.JFrame {

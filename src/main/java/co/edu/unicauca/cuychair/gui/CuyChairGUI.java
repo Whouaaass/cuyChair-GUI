@@ -5,9 +5,9 @@
 package co.edu.unicauca.cuychair.gui;
 
 import co.edu.unicauca.cuychair.gui.views.EntryView;
+
 /**
- *
- * @author Frdy
+ * Main clas for the application
  */
 public class CuyChairGUI {
     
@@ -35,24 +35,12 @@ public class CuyChairGUI {
                 }
                 System.out.println(info.getName());
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EntryView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EntryView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EntryView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(EntryView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EntryView().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new EntryView().setVisible(true));
     }
     
     /**
