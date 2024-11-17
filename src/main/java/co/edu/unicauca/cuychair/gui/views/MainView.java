@@ -179,6 +179,9 @@ public class MainView extends javax.swing.JFrame {
         this.selectedView = selectedView;
         
         viewPanel.validate();        
+        
+        // cambia el titulo de la ventana
+        this.setTitle(selectedView.getId());
         pack();
     }
 

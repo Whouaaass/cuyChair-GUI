@@ -1,10 +1,18 @@
 package co.edu.unicauca.cuychair.gui.views.panels;
 
+import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JScrollBar;
+import javax.swing.JSeparator;
+
 /**
  *
  * @author Frdy
  */
 public class PapersPanel extends javax.swing.JPanel {
+
+    private List<Component> paperComponents = new ArrayList<>();
 
     /**
      * Creates new form PapersPanel
@@ -12,6 +20,21 @@ public class PapersPanel extends javax.swing.JPanel {
     public PapersPanel() {
         System.out.println("Papers panel loaded");
         initComponents();
+        testPapers();
+    }
+
+    private void testPapers() {
+        paperComponents.add(new PaperItem("Estudio sobre IA", "Investigación sobre el impacto de la inteligencia artificial en el mercado laboral", "Publicado"));
+        paperComponents.add(new PaperItem("Machine Learning", "Análisis de algoritmos de aprendizaje supervisado", "Revisión"));
+        paperComponents.add(new PaperItem("Redes Neuronales", "Implementación de redes neuronales profundas en aplicaciones de visión por computadora", "Borrador"));
+        paperComponents.add(new PaperItem("Big Data y Salud", "Exploración del uso de Big Data en la predicción de enfermedades", "Aceptado"));
+        paperComponents.add(new PaperItem("Blockchain en Finanzas", "Estudio del impacto de blockchain en la seguridad financiera", "Borrador"));
+        paperComponents.add(new PaperItem("Energía Renovable", "Evaluación de nuevas tecnologías para energía renovable", "Rechazado"));
+        paperComponents.add(new PaperItem("Ciberseguridad", "Revisión de métodos modernos para la protección de datos", "Publicado"));
+        paperComponents.add(new PaperItem("Desarrollo Sostenible", "Propuestas de estrategias sostenibles en la industria", "Aceptado"));
+        paperComponents.add(new PaperItem("Realidad Aumentada", "Uso de realidad aumentada en la educación", "Revisión"));
+        paperComponents.add(new PaperItem("Computación Cuántica", "Avances en la computación cuántica y sus aplicaciones futuras", "Publicado"));
+        renderList();
     }
 
     /**
@@ -23,30 +46,55 @@ public class PapersPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        optionsPanel = new javax.swing.JPanel();
+        scrollPanel = new javax.swing.JScrollPane();
+        mainPanel = new javax.swing.JPanel();
 
-        jLabel1.setText("This is the papers panel");
+        setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(149, 149, 149)
-                .addComponent(jLabel1)
-                .addContainerGap(129, Short.MAX_VALUE))
+        javax.swing.GroupLayout optionsPanelLayout = new javax.swing.GroupLayout(optionsPanel);
+        optionsPanel.setLayout(optionsPanelLayout);
+        optionsPanelLayout.setHorizontalGroup(
+            optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(132, 132, 132)
-                .addComponent(jLabel1)
-                .addContainerGap(152, Short.MAX_VALUE))
+        optionsPanelLayout.setVerticalGroup(
+            optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
+
+        add(optionsPanel, java.awt.BorderLayout.LINE_END);
+
+        scrollPanel.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                scrollPanelMouseWheelMoved(evt);
+            }
+        });
+
+        mainPanel.setLayout(new javax.swing.BoxLayout(mainPanel, javax.swing.BoxLayout.PAGE_AXIS));
+        scrollPanel.setViewportView(mainPanel);
+
+        add(scrollPanel, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void scrollPanelMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_scrollPanelMouseWheelMoved
+        JScrollBar verticalBar = scrollPanel.getVerticalScrollBar();
+        int scrollAmount = evt.getUnitsToScroll() * verticalBar.getUnitIncrement() * 15;
+        verticalBar.setValue(verticalBar.getValue() + scrollAmount);
+    }//GEN-LAST:event_scrollPanelMouseWheelMoved
 
+    private void renderList() {
+        mainPanel.removeAll();
+        for (int i = 0; i < paperComponents.size(); i++) {
+            mainPanel.add(paperComponents.get(i));
+            if (i < paperComponents.size() - 1) {
+                mainPanel.add(new JSeparator());
+            }
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JPanel optionsPanel;
+    private javax.swing.JScrollPane scrollPanel;
     // End of variables declaration//GEN-END:variables
 }

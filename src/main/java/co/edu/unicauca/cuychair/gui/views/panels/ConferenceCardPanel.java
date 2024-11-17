@@ -26,7 +26,7 @@ public class ConferenceCardPanel extends javax.swing.JPanel {
     
     public void additionalInitComponent() {
         titleLabel.setText(title);
-        descriptionLabel.setText(description);
+        descriptionLabel.setText("<html>" + description + "</html>");
         Integer number = counter.getAndIncrement()*100;
         //this.setBackground(new Color(number%255, (number/255) % 255, (number/(255*255)%255)));
     }
@@ -43,7 +43,7 @@ public class ConferenceCardPanel extends javax.swing.JPanel {
         titleLabel = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        descriptionLabel = new co.edu.unicauca.cuychair.gui.views.controllers.JMultilineLabel();
+        descriptionLabel = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(250, 199));
 
@@ -55,9 +55,8 @@ public class ConferenceCardPanel extends javax.swing.JPanel {
 
         jButton2.setText("Mandar Articulo");
 
-        descriptionLabel.setColumns(20);
-        descriptionLabel.setRows(5);
-        descriptionLabel.setText("[Nombre de la Conferencia] es un evento anual que reúne a expertos, profesionales y entusiastas de [tema o industria] para compartir conocimientos, descubrir las últimas tendencias y fomentar la colaboración. Durante [número de días] días, los asistentes podrán participar en una variedad de actividades, como presentaciones magistrales, sesiones interactivas, paneles de discusión y talleres prácticos, diseñados para profundizar en temas clave de [tema o industria].\n\nCon una selección de ponentes reconocidos a nivel nacional e internacional, esta conferencia ofrece una oportunidad única para aprender de los líderes de opinión y pioneros del sector. Además, los asistentes podrán expandir su red de contactos a través de sesiones de networking y eventos sociales, favoreciendo la creación de relaciones duraderas y oportunidades de colaboración.\n\nNo importa si eres un profesional experimentado, un investigador académico o alguien que recién comienza en el campo; [Nombre de la Conferencia] tiene algo para todos. Únete a nosotros para una experiencia enriquecedora que contribuirá a tu crecimiento profesional y personal en [tema o industria].\n\n");
+        descriptionLabel.setText("description");
+        descriptionLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -74,7 +73,7 @@ public class ConferenceCardPanel extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton2))
                             .addComponent(titleLabel))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 44, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -82,9 +81,9 @@ public class ConferenceCardPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(titleLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(descriptionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(descriptionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -96,7 +95,7 @@ public class ConferenceCardPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private co.edu.unicauca.cuychair.gui.views.controllers.JMultilineLabel descriptionLabel;
+    private javax.swing.JLabel descriptionLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel titleLabel;
