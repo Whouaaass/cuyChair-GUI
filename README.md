@@ -1,5 +1,5 @@
 # CuyChair GUI
-Esta es la interfaz gráfica para nuestro proyecto de Ingeniería de Software II
+Esta es la interfaz gráfica para nuestro proyecto de Ingeniería de Software II.
 
 ## Acerca de la aplicación
 La aplicación trata de un gestor de conferencias que soporta: 
