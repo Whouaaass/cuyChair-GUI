@@ -36,6 +36,10 @@ public class DateUtils {
         return prettyDateFormatter.format(date);
     }
 
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         Date now = new Date();
 

@@ -17,10 +17,13 @@ public class Conference {
         this.description = description;
     }
 
+    /**
+     * @return String
+     */
     public String getTitle() {
         return title;
     }
-
+    
     public Date getDate() {
         return date;
     }

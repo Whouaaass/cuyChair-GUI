@@ -1,10 +1,23 @@
 package examples;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+
+/**
+ * Ejemplo de como crear un panel con scroll que ajusta dinámicamente el número de columnas.
+ */
 public class GridWrapScrollPanelExample extends JFrame {
     private JPanel contentPanel;
     private JScrollPane scrollPane;
@@ -39,6 +52,11 @@ public class GridWrapScrollPanelExample extends JFrame {
         });
     }
 
+    
+    /** 
+     * @param availableWidth
+     * @return int
+     */
     // Method to calculate the number of columns based on available width
     private int calculateColumns(int availableWidth) {
         return Math.max(1, availableWidth / (cardWidth + 10)); // 10 is the gap between cards

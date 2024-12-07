@@ -6,8 +6,15 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
+/**
+ * Esta es una clase que extiende JTextArea y limita la cantidad de caracteres que se pueden ingresar.
+ */
 public class JCustomTextArea extends JTextArea {
-    
+
+    /**
+     * Crea una nueva instancia de JCustomTextArea con un tamaño máximo de caracteres.
+     * @param maxSize tamaño máximo de caracteres
+     */
     public JCustomTextArea(int maxSize) {
         super();
         ((AbstractDocument) this.getDocument()).setDocumentFilter(new DocumentSizeFilter(maxSize));

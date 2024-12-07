@@ -1,4 +1,4 @@
-package co.edu.unicauca.cuychair.gui.views.test;
+package co.edu.unicauca.cuychair.gui.views.panels;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -7,11 +7,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- *
+ * Panel para mostrar los artículos enviados por un autor
  * @author Frdy
  */
 public class AuthorPanel extends JPanel {
-    private JTable articlesTable;       // Tabla para mostrar artículos
+    private JTable articlesTable; // Tabla para mostrar artículos
     private JButton newSubmissionButton; // Botón para enviar un nuevo artículo
 
     public AuthorPanel() {
@@ -19,11 +19,11 @@ public class AuthorPanel extends JPanel {
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Modelo para la tabla de artículos
-        String[] columnNames = {"Nombre del Artículo", "Conferencia", "Estado"};
+        String[] columnNames = { "Nombre del Artículo", "Conferencia", "Estado" };
         Object[][] data = {
-                {"Inteligencia Artificial Avanzada", "Conferencia de IA 2024", "En Revisión"},
-                {"Sistemas Distribuidos Modernos", "Conferencia de Computación 2024", "Aceptado"},
-                {"Bases de Datos Escalables", "Conferencia de Software 2024", "Rechazado"}
+                { "Inteligencia Artificial Avanzada", "Conferencia de IA 2024", "En Revisión" },
+                { "Sistemas Distribuidos Modernos", "Conferencia de Computación 2024", "Aceptado" },
+                { "Bases de Datos Escalables", "Conferencia de Software 2024", "Rechazado" }
         };
 
         DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {
@@ -54,7 +54,8 @@ public class AuthorPanel extends JPanel {
 
     // Método para manejar la acción de nuevo envío
     private void handleNewSubmission() {
-        JOptionPane.showMessageDialog(this, "Abriendo panel para enviar un nuevo artículo...", "Nuevo Envío", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Abriendo panel para enviar un nuevo artículo...", "Nuevo Envío",
+                JOptionPane.INFORMATION_MESSAGE);
 
         // Aquí podrías abrir el panel correspondiente para el envío de artículos.
         // Por ejemplo:
@@ -64,6 +65,10 @@ public class AuthorPanel extends JPanel {
         // parentFrame.repaint();
     }
 
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         JFrame frame = new JFrame("Panel del Autor");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,5 +76,6 @@ public class AuthorPanel extends JPanel {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
     }
 }

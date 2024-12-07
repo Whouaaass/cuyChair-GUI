@@ -6,8 +6,7 @@ package co.edu.unicauca.cuychair.gui.utils;
  */
 public class StringUtils {
     /**
-     * Truncates a string and adds ellipses if it exceeds the specified length.
-     *
+     * Truncates a string and adds ellipses if it exceeds the specified length.     *
      * @param text   The input string to truncate.
      * @param maxLength The maximum allowed length.
      * @return The truncated string with ellipses if it exceeds the length.
@@ -25,6 +24,7 @@ public class StringUtils {
         return text.substring(0, maxLength - 3) + "...";
     }
 
+    
     public static void main(String[] args) {
         // Test examples        
 

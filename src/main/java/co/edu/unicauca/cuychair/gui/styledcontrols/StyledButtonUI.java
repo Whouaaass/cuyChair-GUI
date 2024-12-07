@@ -1,24 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.edu.unicauca.cuychair.gui.styledcontrols;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+
 import javax.swing.AbstractButton;
 import javax.swing.JComponent;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicButtonUI;
 
 /**
- *
+ * Botón con estilo personalizado
  * @author Frdy
  */
 public class StyledButtonUI extends BasicButtonUI {
 
+    
+    /** 
+     * @param c
+     */
     @Override
     public void installUI(JComponent c) {
         super.installUI(c);
