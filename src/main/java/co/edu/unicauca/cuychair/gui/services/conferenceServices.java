@@ -1,6 +1,7 @@
 package co.edu.unicauca.cuychair.gui.services;
 
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.client.Client;
@@ -11,7 +12,9 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
 import org.glassfish.jersey.jackson.JacksonFeature;
-import co.edu.unicauca.cuychair.gui.DTOs.ConferenceDTO;
+import co.edu.unicauca.cuychair.gui.DTOs.conferenceAPI.ConferenceDTO;
+import co.edu.unicauca.cuychair.gui.DTOs.conferenceAPI.AddConferenceParticipationDTO;
+import co.edu.unicauca.cuychair.gui.DTOs.conferenceAPI.PostConferenceDTO;
 
 public class ConferenceServices{
 private static final String ENDPOINT = "http://localhost:8092/api";
