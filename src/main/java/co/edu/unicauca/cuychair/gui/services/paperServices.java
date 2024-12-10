@@ -13,7 +13,7 @@ import javax.ws.rs.client.Entity;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 import co.edu.unicauca.cuychair.gui.DTOs.paperAPI.PaperDTO;
-import co.edu.unicauca.cuychair.gui.DTOs.UserDTO;
+import co.edu.unicauca.cuychair.gui.DTOs.paperAPI.UserDTO;
 
 /**
  *
