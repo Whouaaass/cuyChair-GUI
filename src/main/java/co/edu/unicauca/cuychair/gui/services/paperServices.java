@@ -1,5 +1,5 @@
-package co.edu.unicauca.cuychair.gui.consumer;
+package co.edu.unicauca.cuychair.gui.services;
 
-public class paperConsumer {
+public class PaperServices {
 
 }
