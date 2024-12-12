@@ -1,4 +1,4 @@
-package co.edu.unicauca.cuychair.gui.services;
+package co.edu.unicauca.cuychair.gui.api.services;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import javax.ws.rs.client.Entity;
 
 import org.glassfish.jersey.jackson.JacksonFeature;
 
-import co.edu.unicauca.cuychair.gui.DTOs.paperAPI.PaperDTO;
-import co.edu.unicauca.cuychair.gui.DTOs.paperAPI.UserDTO;
+import co.edu.unicauca.cuychair.gui.api.dtos.paperAPI.PaperDTO;
+import co.edu.unicauca.cuychair.gui.api.dtos.paperAPI.UserDTO;
 
 /**
  *

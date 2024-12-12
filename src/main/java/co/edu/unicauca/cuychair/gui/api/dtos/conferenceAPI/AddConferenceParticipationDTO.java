@@ -1,4 +1,4 @@
-package co.edu.unicauca.cuychair.gui.DTOs.conferenceAPI;
+package co.edu.unicauca.cuychair.gui.api.dtos.conferenceAPI;
 
 
 /**

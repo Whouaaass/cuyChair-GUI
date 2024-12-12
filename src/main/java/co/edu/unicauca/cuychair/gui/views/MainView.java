@@ -40,8 +40,8 @@ public class MainView extends javax.swing.JFrame {
         headerPanel = new JPanel();
         navigationPanel = new JPanel();
         viewPanel = new JPanel();
-        jButton1 = new JButton("Conferences");
-        jButton2 = new JButton("Papers");
+        jButton1 = new JButton("Conferencias");
+        jButton2 = new JButton("Articulos");
         jButton3 = new JButton("Review Papers");
         JLabel userLabel = new JLabel("User: " + SessionContext.getInstance().getUserName());        
 

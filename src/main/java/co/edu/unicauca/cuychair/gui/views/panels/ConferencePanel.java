@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -98,6 +99,8 @@ public class ConferencePanel extends javax.swing.JPanel {
 
         optionsPanel.add(createConferenceButton);
 
+        createConferenceButton.addActionListener(evt -> openCreateConferenceModal());
+
         add(optionsPanel, BorderLayout.LINE_END);
         
     }
@@ -137,6 +140,16 @@ public class ConferencePanel extends javax.swing.JPanel {
 
         contentPanel.revalidate(); // Refresh the layout
         contentPanel.repaint();
+    }
+
+    private void openCreateConferenceModal() {
+        CreateConferencePanel createConferencePanel = new CreateConferencePanel();
+        JFrame frame = new JFrame();
+        frame.add(createConferencePanel);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);        
     }
 
     private JScrollPane scrollPanel;

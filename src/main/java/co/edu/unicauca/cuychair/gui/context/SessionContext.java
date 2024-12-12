@@ -1,5 +1,7 @@
 package co.edu.unicauca.cuychair.gui.context;
 
+import co.edu.unicauca.cuychair.gui.language.LanguageManager;
+
 /**
  * Clase que es un singleton que contiene la información de la sesión actual del
  * usuario
@@ -9,8 +11,10 @@ public class SessionContext {
     private String userId;
     private String userName;
     private String userRole;
+    private final LanguageManager languageManager;
 
     private SessionContext() {
+        languageManager = new LanguageManager();
     }
 
     /**
@@ -77,5 +81,9 @@ public class SessionContext {
      */
     public void setUserRole(String userRole) {
         this.userRole = userRole;
+    }
+    
+    public LanguageManager getLanguageManager() {
+        return languageManager;
     }
 }

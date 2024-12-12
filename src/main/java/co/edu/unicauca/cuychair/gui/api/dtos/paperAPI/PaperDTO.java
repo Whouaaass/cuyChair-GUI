@@ -1,4 +1,4 @@
-package co.edu.unicauca.cuychair.gui.DTOs.paperAPI;
+package co.edu.unicauca.cuychair.gui.api.dtos.paperAPI;
 
 import lombok.Getter;
 

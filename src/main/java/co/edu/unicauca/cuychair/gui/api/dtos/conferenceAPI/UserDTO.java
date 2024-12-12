@@ -1,4 +1,4 @@
-package co.edu.unicauca.cuychair.gui.DTOs.conferenceAPI;
+package co.edu.unicauca.cuychair.gui.api.dtos.conferenceAPI;
 
 /**
  * DTO usado en ConferenceDTO, para traer datos de un usuario

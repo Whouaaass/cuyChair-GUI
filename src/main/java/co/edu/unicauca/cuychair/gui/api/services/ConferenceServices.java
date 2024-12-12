@@ -1,4 +1,4 @@
-package co.edu.unicauca.cuychair.gui.services;
+package co.edu.unicauca.cuychair.gui.api.services;
 
 import java.util.Date;
 import java.util.List;
@@ -11,9 +11,10 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
 import org.glassfish.jersey.jackson.JacksonFeature;
-import co.edu.unicauca.cuychair.gui.DTOs.conferenceAPI.ConferenceDTO;
-import co.edu.unicauca.cuychair.gui.DTOs.conferenceAPI.AddConferenceParticipationDTO;
-import co.edu.unicauca.cuychair.gui.DTOs.conferenceAPI.PostConferenceDTO;
+
+import co.edu.unicauca.cuychair.gui.api.dtos.conferenceAPI.AddConferenceParticipationDTO;
+import co.edu.unicauca.cuychair.gui.api.dtos.conferenceAPI.ConferenceDTO;
+import co.edu.unicauca.cuychair.gui.api.dtos.conferenceAPI.PostConferenceDTO;
 
 public class ConferenceServices {
     private static final String ENDPOINT = "http://localhost:8092/api";

@@ -1,4 +1,4 @@
-package co.edu.unicauca.cuychair.gui.styledcontrols;
+package co.edu.unicauca.cuychair.gui.views.styledcontrols;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

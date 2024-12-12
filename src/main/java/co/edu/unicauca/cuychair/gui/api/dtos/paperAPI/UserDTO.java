@@ -1,4 +1,5 @@
-package co.edu.unicauca.cuychair.gui.DTOs.userAPI;
+package co.edu.unicauca.cuychair.gui.api.dtos.paperAPI;
+
 
 
 public class UserDTO {
