@@ -1,6 +1,5 @@
 package co.edu.unicauca.cuychair.gui.services;
 
-
 import java.util.Date;
 import java.util.List;
 
@@ -16,30 +15,34 @@ import co.edu.unicauca.cuychair.gui.DTOs.conferenceAPI.ConferenceDTO;
 import co.edu.unicauca.cuychair.gui.DTOs.conferenceAPI.AddConferenceParticipationDTO;
 import co.edu.unicauca.cuychair.gui.DTOs.conferenceAPI.PostConferenceDTO;
 
-public class ConferenceServices{
-private static final String ENDPOINT = "http://localhost:8092/api";
+public class ConferenceServices {
+    private static final String ENDPOINT = "http://localhost:8092/api";
     private final Client client;
-    
-    public ConferenceServices(){        
+
+    public ConferenceServices() {
         client = ClientBuilder.newClient().register(new JacksonFeature());
     }
+
     // Revisar si el path es correcto
     public List<ConferenceDTO> getAllConferences() {
-        WebTarget target = client.target(ENDPOINT+"/conference");
-        return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<ConferenceDTO>>() {});
+        WebTarget target = client.target(ENDPOINT + "/conference");
+        return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<ConferenceDTO>>() {
+        });
     }
-    
+
     // Revisar si el path es correcto
-    public ConferenceDTO addConference(String city, String title, String subject, Date date, String description, Integer ownerId) {
+    public ConferenceDTO addConference(String city, String title, String subject, Date date, String description,
+            Integer ownerId) {
         PostConferenceDTO post = new PostConferenceDTO();
         post.setCity(city);
         post.setTitle(title);
         post.setDate(date);
-        post.setOwnerId(ownerId);        
+        post.setOwnerId(ownerId);
         post.setDescription(description);
         post.setSubject(subject);
         WebTarget target = client.target(ENDPOINT + "/conference");
-        return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(post, MediaType.APPLICATION_JSON), ConferenceDTO.class);
+        return target.request(MediaType.APPLICATION_JSON).post(Entity.entity(post, MediaType.APPLICATION_JSON),
+                ConferenceDTO.class);
     }
 
     public ConferenceDTO getConference(Integer conferenceId) {
@@ -52,7 +55,8 @@ private static final String ENDPOINT = "http://localhost:8092/api";
         conferenceParticipation.setConferenceId(conferenceId);
         conferenceParticipation.setUserId(authorId);
         WebTarget target = client.target(ENDPOINT + "/conference/addAuthor");
-        return target.request(MediaType.APPLICATION_JSON).put(Entity.entity(conferenceParticipation, MediaType.APPLICATION_JSON), ConferenceDTO.class);
+        return target.request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(conferenceParticipation, MediaType.APPLICATION_JSON), ConferenceDTO.class);
     }
 
     public ConferenceDTO addReviewer(Integer conferenceId, Integer reviewerId) {
@@ -60,13 +64,15 @@ private static final String ENDPOINT = "http://localhost:8092/api";
         conferenceParticipation.setConferenceId(conferenceId);
         conferenceParticipation.setUserId(reviewerId);
         WebTarget target = client.target(ENDPOINT + "/conference/addReviewer");
-        return target.request(MediaType.APPLICATION_JSON).put(Entity.entity(conferenceParticipation, MediaType.APPLICATION_JSON), ConferenceDTO.class);
+        return target.request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(conferenceParticipation, MediaType.APPLICATION_JSON), ConferenceDTO.class);
     }
 
     public List<ConferenceDTO> findAllByParticipant(Integer userId) {
 
         WebTarget target = client.target(ENDPOINT + "/conference/user/" + userId);
 
-        return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<ConferenceDTO>>() {});
+        return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<ConferenceDTO>>() {
+        });
     }
 }
