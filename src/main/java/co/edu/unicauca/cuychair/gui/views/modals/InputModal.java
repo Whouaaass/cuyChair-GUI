@@ -35,7 +35,7 @@ public class InputModal extends JDialog {
         messageLabel.setText(message);
         setLocationRelativeTo(parent);
     }
-
+    
     public final void initComponents() {
         setLayout(new BorderLayout());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);

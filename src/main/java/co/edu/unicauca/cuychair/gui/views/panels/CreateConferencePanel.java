@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Window;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -48,6 +49,7 @@ public class CreateConferencePanel extends JPanel {
     private JList<String> listAuthors;
     private DefaultListModel<String> listModelAuthors;
     private JButton btnSubmit;
+    private JPanel mainPanel;
 
     public CreateConferencePanel() {
         initComponents();
@@ -55,6 +57,7 @@ public class CreateConferencePanel extends JPanel {
 
     private void initComponents() {
         // Initialize components with improved dimensions
+        mainPanel = new JPanel();
         txtTitle = new JTextField();
         txtSubject = new JTextField();
         txtCity = new JTextField();
@@ -63,6 +66,7 @@ public class CreateConferencePanel extends JPanel {
         listReviewers = new JList<>(listModelReviewers = new DefaultListModel<>());
         listAuthors = new JList<>(listModelAuthors = new DefaultListModel<>());
         btnSubmit = new JButton("Crear Conferencia");
+        JPanel inputPanel = new JPanel(new GridBagLayout());
 
         // Set preferred sizes
         Dimension fieldSize = new Dimension(FIELD_WIDTH, txtTitle.getPreferredSize().height);
@@ -77,11 +81,10 @@ public class CreateConferencePanel extends JPanel {
         btnSubmit.setFont(new Font(btnSubmit.getFont().getName(), Font.BOLD, 14));
 
         // Layout setup
-        setLayout(new BorderLayout(GRID_HGAP, GRID_VGAP));
-        setBorder(new EmptyBorder(BORDER_PADDING, BORDER_PADDING, BORDER_PADDING, BORDER_PADDING));
+        mainPanel.setLayout(new BorderLayout(GRID_HGAP, GRID_VGAP));
+        mainPanel.setBorder(new EmptyBorder(BORDER_PADDING, BORDER_PADDING, BORDER_PADDING, BORDER_PADDING));
 
         // Create main input panel
-        JPanel inputPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(5, 5, 5, 5);
@@ -102,7 +105,7 @@ public class CreateConferencePanel extends JPanel {
         inputPanel.add(new JScrollPane(txtDescription), gbc);
 
         // Lists panel
-        JPanel listsPanel = new JPanel(new GridLayout(1, 2, GRID_HGAP, GRID_VGAP));
+        JPanel listsPanel = new JPanel(new GridLayout(2, 1, GRID_HGAP, GRID_VGAP));
 
         // Configure lists with fixed height
         JScrollPane reviewersScroll = new JScrollPane(listReviewers);
@@ -114,11 +117,11 @@ public class CreateConferencePanel extends JPanel {
         JPanel reviewersPanel = new JPanel(new BorderLayout());
         reviewersPanel.setBorder(BorderFactory.createTitledBorder("Revisores"));
         reviewersPanel.add(reviewersScroll, BorderLayout.CENTER);
-        JButton btnAddReviewer = new JButton("Add");
-        JButton btnRemoveReviewer = new JButton("Remove");
+        JButton btnAddReviewer = new JButton("Agregar");
+        JButton btnRemoveReviewer = new JButton("Remover");
         JPanel reviewersButtonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        btnAddReviewer.addActionListener(l -> 
-            addPersonThroughModal("Ingrese el nombre del revisor:", listModelReviewers)
+        btnAddReviewer.addActionListener(
+            l -> addPersonThroughModal("Ingrese el correo del revisor:", listModelReviewers)
         );
         btnRemoveReviewer.addActionListener(l -> removeSelectedIndex(listReviewers, listModelReviewers));
         reviewersButtonsPanel.add(btnAddReviewer);
@@ -131,8 +134,8 @@ public class CreateConferencePanel extends JPanel {
         JButton btnAddAuthor = new JButton("Add");
         JButton btnRemoveAuthor = new JButton("Remove");
         JPanel authorsButtonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        btnAddAuthor.addActionListener(l -> 
-            addPersonThroughModal("Ingrese el nombre del autor:", listModelAuthors)
+        btnAddAuthor.addActionListener(l
+                -> addPersonThroughModal("Ingrese el correo del autor:", listModelAuthors)
         );
         btnRemoveAuthor.addActionListener(l -> removeSelectedIndex(listAuthors, listModelAuthors));
         authorsButtonsPanel.add(btnAddAuthor);
@@ -146,9 +149,11 @@ public class CreateConferencePanel extends JPanel {
         buttonPanel.add(btnSubmit);
 
         // Add all panels to main panel
-        add(inputPanel, BorderLayout.NORTH);
-        add(listsPanel, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
+        mainPanel.add(inputPanel, BorderLayout.WEST);
+        mainPanel.add(listsPanel, BorderLayout.EAST);
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        add(mainPanel);
     }
 
     private void addFormField(JPanel panel, String label, JComponent field, GridBagConstraints gbc, int row) {
@@ -161,10 +166,19 @@ public class CreateConferencePanel extends JPanel {
         panel.add(field, gbc);
     }
 
-    private void addPersonThroughModal(String message, DefaultListModel<String> list) {        
-        InputModal modal = new InputModal((JFrame) SwingUtilities.getWindowAncestor(this), message, (String input) -> {                        
-            list.addElement(input);
-        });
+    private void addPersonThroughModal(String message, DefaultListModel<String> list) {
+        Window ancestor = SwingUtilities.getWindowAncestor(this);
+        while (ancestor != null && !(ancestor instanceof JFrame)) {
+            ancestor = SwingUtilities.getWindowAncestor(ancestor);
+        }
+        if (ancestor == null) {
+            return;
+        }
+        InputModal modal = new InputModal((JFrame) ancestor,
+                message,
+                (String input) -> {
+                    list.addElement(input);
+                });
         modal.setVisible(true);
     }
 

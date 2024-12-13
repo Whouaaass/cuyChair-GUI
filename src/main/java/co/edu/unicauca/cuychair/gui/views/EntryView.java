@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import co.edu.unicauca.cuychair.gui.context.SessionContext;
 import co.edu.unicauca.cuychair.gui.language.Languagable;
 import co.edu.unicauca.cuychair.gui.language.LanguageManager;
+import co.edu.unicauca.cuychair.gui.views.components.UserInfo;
 import co.edu.unicauca.cuychair.gui.views.styledcontrols.StyledButtonUI;
 
 /**
@@ -13,6 +14,7 @@ import co.edu.unicauca.cuychair.gui.views.styledcontrols.StyledButtonUI;
  * @author Frdy
  */
 public class EntryView extends javax.swing.JFrame implements Languagable {
+
     /**
      * Creates new form MenuView
      */
@@ -20,7 +22,7 @@ public class EntryView extends javax.swing.JFrame implements Languagable {
         initComponents();
         this.updateLanguage();
         SessionContext.getInstance().getLanguageManager().subscribe(this);
-        setUIs();        
+        setUIs();
         this.setResizable(false);
         this.setLocationRelativeTo(null); // this centers the view in the screen
     }
@@ -31,11 +33,11 @@ public class EntryView extends javax.swing.JFrame implements Languagable {
         icon = new javax.swing.JLabel();
         nameLabel = new javax.swing.JLabel();
         MainPanel = new javax.swing.JPanel();
-        InfoPanel = new javax.swing.JPanel();
-        userIconLabel = new javax.swing.JLabel();
-        userInfoLabel = new javax.swing.JPanel();
-        mailLabel = new javax.swing.JLabel();
-        usernameLabel = new javax.swing.JLabel();
+        InfoPanel = new UserInfo(
+                SessionContext.getInstance().getUserMail(),
+                SessionContext.getInstance().getUserName()
+        );
+
         OptionsPanel = new javax.swing.JPanel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 20), new java.awt.Dimension(0, 20),
                 new java.awt.Dimension(32767, 30));
@@ -88,21 +90,6 @@ public class EntryView extends javax.swing.JFrame implements Languagable {
         getContentPane().add(BannerPanel, java.awt.BorderLayout.CENTER);
 
         MainPanel.setLayout(new java.awt.BorderLayout());
-
-        userIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/userIcon.png"))); // NOI18N
-        InfoPanel.add(userIconLabel);
-
-        userInfoLabel.setLayout(new javax.swing.BoxLayout(userInfoLabel, javax.swing.BoxLayout.Y_AXIS));
-
-        mailLabel.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
-        mailLabel.setText("user@mail.com");
-        userInfoLabel.add(mailLabel);
-
-        usernameLabel.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
-        usernameLabel.setText("Nombre de Usuario");
-        userInfoLabel.add(usernameLabel);
-
-        InfoPanel.add(userInfoLabel);
 
         MainPanel.add(InfoPanel, java.awt.BorderLayout.PAGE_START);
 
@@ -185,7 +172,7 @@ public class EntryView extends javax.swing.JFrame implements Languagable {
         MainPanel.add(OptionsPanel, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(MainPanel, java.awt.BorderLayout.LINE_START);
-                
+
         pack();
     }
 
@@ -200,17 +187,21 @@ public class EntryView extends javax.swing.JFrame implements Languagable {
         LanguageManager lm = SessionContext.getInstance().getLanguageManager();
         String message;
         message = lm.getString("nameLabel");
-        if (message != null) nameLabel.setText(message);
+        if (message != null) {
+            nameLabel.setText(message);
+        }
         message = lm.getString("goConferencesButton");
-        if (message != null) goConferencesButton.setText(message);
+        if (message != null) {
+            goConferencesButton.setText(message);
+        }
         message = lm.getString("goPapersButton");
-        if (message != null) goPapersButton.setText(message);
+        if (message != null) {
+            goPapersButton.setText(message);
+        }
         message = lm.getString("goReviewPapersButton");
-        if (message != null) goReviewPapersButton.setText(message);
-        message = lm.getString("mailLabel");
-        if (message != null) mailLabel.setText(message);
-        message = lm.getString("usernameLabel");
-        if (message != null) usernameLabel.setText(message);        
+        if (message != null) {
+            goReviewPapersButton.setText(message);
+        }
     }
 
     private void goReviewPapersButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,7 +236,7 @@ public class EntryView extends javax.swing.JFrame implements Languagable {
 
     // Variables declaration - do not modify
     private javax.swing.JPanel BannerPanel;
-    private javax.swing.JPanel InfoPanel;
+
     private javax.swing.JPanel MainPanel;
     private javax.swing.JPanel OptionsPanel;
     private javax.swing.Box.Filler filler1;
@@ -254,9 +245,8 @@ public class EntryView extends javax.swing.JFrame implements Languagable {
     private javax.swing.JButton goPapersButton;
     private javax.swing.JButton goReviewPapersButton;
     private javax.swing.JLabel icon;
-    private javax.swing.JLabel mailLabel;
+    private UserInfo InfoPanel;
+
     private javax.swing.JLabel nameLabel;
-    private javax.swing.JLabel userIconLabel;
-    private javax.swing.JPanel userInfoLabel;
-    private javax.swing.JLabel usernameLabel;
+
 }

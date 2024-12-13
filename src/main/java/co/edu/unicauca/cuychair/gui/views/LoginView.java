@@ -1,7 +1,6 @@
 package co.edu.unicauca.cuychair.gui.views;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -14,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 /**
  * Simple login view with username, password, and login button.
@@ -39,7 +39,6 @@ public class LoginView extends JPanel {
         JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createTitledBorder("Inicio de sesión"));
         panel.setLayout(new GridBagLayout());
-        panel.setBackground(Color.WHITE);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -72,6 +71,12 @@ public class LoginView extends JPanel {
         loginButton.addActionListener(e -> authenticate());
         panel.add(loginButton, gbc);
 
+        // Create Account Button
+        gbc.gridy = 3;
+        JButton createAccountButton = new JButton("Crear cuenta");
+        createAccountButton.addActionListener(e -> navigateToSignup());
+        panel.add(createAccountButton, gbc);
+
         add(panel, BorderLayout.CENTER);
     }
 
@@ -85,12 +90,29 @@ public class LoginView extends JPanel {
             return;
         }
 
-        if ("admin".equals(username) && "1234".equals(password)) {
-            JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } else {
+        if (!("admin".equals(username) && "1234".equals(password))) {
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error",
                     JOptionPane.ERROR_MESSAGE);
+            return;
         }
+        
+        // Navigate to the main view
+        JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        currentFrame.dispose();
+        JFrame mainFrame = new EntryView();
+        mainFrame.setTitle("CuyChair");
+        mainFrame.setVisible(true);
+    }
+
+    private void navigateToSignup() {
+        JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        currentFrame.getContentPane().removeAll();
+        currentFrame.add(new SignupView());
+        currentFrame.setTitle("Registro de Usuario");
+        currentFrame.revalidate();
+        currentFrame.repaint();
+        currentFrame.pack();
+        
     }
 
     public static void main(String[] args) {

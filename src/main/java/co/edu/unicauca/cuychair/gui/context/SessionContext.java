@@ -8,12 +8,17 @@ import co.edu.unicauca.cuychair.gui.language.LanguageManager;
  */
 public class SessionContext {
     private static SessionContext instance;
-    private String userId;
+    private Integer userId;
     private String userName;
     private String userRole;
+    private String userMail;
     private final LanguageManager languageManager;
 
     private SessionContext() {
+        userId = -1;
+        userName = "NoApi";
+        userRole = "NoApi";
+        userMail = "NoApi@noApi.com";
         languageManager = new LanguageManager();
     }
 
@@ -34,7 +39,7 @@ public class SessionContext {
      * 
      * @return String id del usuario
      */
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
@@ -43,7 +48,7 @@ public class SessionContext {
      * 
      * @param userId id del usuario
      */
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -81,6 +86,25 @@ public class SessionContext {
      */
     public void setUserRole(String userRole) {
         this.userRole = userRole;
+    }
+
+
+    /**
+     * Obtiene el correo del usuario
+     * 
+     * @return correo del usuario
+     */
+    public String getUserMail() {
+        return userMail;
+    }
+
+    /**
+     * Establece el correo del usuario
+     * 
+     * @param userMail correo del usuario
+     */
+    public void setUserMail(String userMail) {
+        this.userMail = userMail;
     }
     
     public LanguageManager getLanguageManager() {

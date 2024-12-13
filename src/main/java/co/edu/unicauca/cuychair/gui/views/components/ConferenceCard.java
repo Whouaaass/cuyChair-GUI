@@ -23,7 +23,7 @@ import co.edu.unicauca.cuychair.gui.utils.StringUtils;
  */
 public class ConferenceCard extends JPanel {
 
-    public static final int CARD_WIDTH = 250;
+    public static final int CARD_WIDTH = 220;
 
     private final Conference conference;
 
