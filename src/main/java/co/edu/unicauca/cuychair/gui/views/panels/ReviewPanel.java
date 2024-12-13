@@ -4,9 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -18,32 +19,62 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 
+import co.edu.unicauca.cuychair.gui.api.dtos.conferenceAPI.ConferenceDTO;
+import co.edu.unicauca.cuychair.gui.api.dtos.paperReviewAPI.PaperReviewItemDTO;
+import co.edu.unicauca.cuychair.gui.api.dtos.paperReviewAPI.ResultChangeStateDTO;
+import co.edu.unicauca.cuychair.gui.api.services.ConferenceServices;
+import co.edu.unicauca.cuychair.gui.api.services.PaperReviewServices;
+import co.edu.unicauca.cuychair.gui.context.AppContext;
+import co.edu.unicauca.cuychair.gui.context.SessionContext;
 import co.edu.unicauca.cuychair.gui.views.controllers.JCustomTextArea;
 
 /**
  * Panel para enviar revisiones de artículos
+ *
  * @author Frdy
  */
 public class ReviewPanel extends JPanel {
 
     private final int COMMENT_LIMIT = 1000; // Límite de caracteres para comentarios
 
-    private final JList<String> articleList; // Lista de artículos
-    private final JTextArea commentsArea; // Área para escribir comentarios
-    private final JComboBox<String> ratingCombo; // ComboBox para calificación
-    private final JButton submitButton; // Botón para enviar la revisión
+    private JList<PaperReviewItemDTO> articleList; // Lista de artículos
+    private JTextArea commentsArea; // Área para escribir comentarios
+    private JComboBox<String> ratingCombo; // ComboBox para calificación
+    private JButton submitButton; // Botón para enviar la revisión
 
     public ReviewPanel() {
+        initComponents();
+        loadToReview();
+    }
+
+    /**
+     * Inicializa los componentes del panel
+     */
+    private void loadToReview() {
+        PaperReviewServices paperReviewServices = AppContext.getInstance().getPaperReviewService();
+        ConferenceServices conferenceServices = AppContext.getInstance().getConferenceService();
+
+        // Obtener los artículos pendientes de revisión
+        List<ConferenceDTO> relatedConferences = conferenceServices.findAllByReviewer(
+                SessionContext.getInstance().getUserId()
+        );
+        if (relatedConferences == null) {
+            return;
+        }
+        List<PaperReviewItemDTO> pendingReviews = new ArrayList<>();
+        for (ConferenceDTO conference : relatedConferences) {
+            pendingReviews.addAll(paperReviewServices.getPendingReviews(conference.getId()));
+        }
+        articleList.setListData(pendingReviews.toArray(new PaperReviewItemDTO[0]));
+    }
+
+    private void initComponents() {
         setLayout(new BorderLayout(10, 10));
 
         // Panel izquierdo: Lista de artículos
         JPanel articlePanel = new JPanel(new BorderLayout());
         articlePanel.setBorder(BorderFactory.createTitledBorder("Artículos Pendientes"));
-        DefaultListModel<String> articleListModel = new DefaultListModel<>();
-        articleListModel.addElement("Artículo 1: Inteligencia Artificial");
-        articleListModel.addElement("Artículo 2: Sistemas Distribuidos");
-        articleListModel.addElement("Artículo 3: Bases de Datos");
-        articleList = new JList<>(articleListModel);
+        articleList = new JList<>();
         articleList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         articlePanel.add(new JScrollPane(articleList), BorderLayout.CENTER);
         add(articlePanel, BorderLayout.WEST);
@@ -61,7 +92,7 @@ public class ReviewPanel extends JPanel {
         // Panel de calificación
         JPanel ratingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         ratingPanel.setBorder(BorderFactory.createTitledBorder("Calificación"));
-        String[] ratings = { "1 - Muy Deficiente", "2 - Deficiente", "3 - Regular", "4 - Bueno", "5 - Excelente" };
+        String[] ratings = {"1 - Muy Deficiente", "2 - Deficiente", "3 - Regular", "4 - Bueno", "5 - Excelente"};
         ratingCombo = new JComboBox<>(ratings);
         ratingPanel.add(new JLabel("Calificación:"));
         ratingPanel.add(ratingCombo);
@@ -82,7 +113,8 @@ public class ReviewPanel extends JPanel {
 
     // Manejo de la acción de envío
     private void handleReviewSubmission() {
-        String selectedArticle = articleList.getSelectedValue();
+        PaperReviewServices paperReviewServices = AppContext.getInstance().getPaperReviewService();
+        String selectedArticle = articleList.getSelectedValue().toString();
         String comments = commentsArea.getText().trim();
         String rating = (String) ratingCombo.getSelectedItem();
 
@@ -98,6 +130,18 @@ public class ReviewPanel extends JPanel {
         }
 
         // Aquí puedes añadir la lógica para guardar la revisión en la base de datos
+        ResultChangeStateDTO result = paperReviewServices.changeState(
+                articleList.getSelectedValue().getIdPaperReview(),
+                SessionContext.getInstance().getUserId(),
+                paperReviewServices.PUBLISHED_STATE
+        );
+
+        if (!result.isChangeValid()) {            
+            JOptionPane.showMessageDialog(this, "Error al enviar la revisión: " + result.getComment(), "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         JOptionPane.showMessageDialog(this, "Revisión enviada para \"" + selectedArticle + "\".\nCalificación: "
                 + rating + "\nComentarios: " + comments, "Revisión Enviada", JOptionPane.INFORMATION_MESSAGE);
 
@@ -105,10 +149,12 @@ public class ReviewPanel extends JPanel {
         articleList.clearSelection();
         commentsArea.setText("");
         ratingCombo.setSelectedIndex(0);
+
+        // Actualizar la lista de artículos
+        loadToReview();
     }
 
-    
-    /** 
+    /**
      * @param args
      */
     public static void main(String[] args) {

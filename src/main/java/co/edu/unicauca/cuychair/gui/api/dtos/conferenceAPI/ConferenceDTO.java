@@ -107,7 +107,7 @@ public class ConferenceDTO {
 
     @Override
     public String toString() {
-        return "ConferenceDTO{" + "id=" + id + ", title=" + title + ", subject=" + subject + ", city=" + city + ", date=" + date + ", description=" + description + ", reviewers=" + reviewers + ", authors=" + authors + ", owner=" + owner + '}';
+        return title;
     }
 
     

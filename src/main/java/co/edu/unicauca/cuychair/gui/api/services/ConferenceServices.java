@@ -17,8 +17,12 @@ import co.edu.unicauca.cuychair.gui.api.dtos.conferenceAPI.ConferenceDTO;
 import co.edu.unicauca.cuychair.gui.api.dtos.conferenceAPI.PostConferenceDTO;
 
 public class ConferenceServices {
+
     private static final String ENDPOINT = "http://localhost:8092/api";
     private final Client client;
+
+    
+    
 
     public ConferenceServices() {
         client = ClientBuilder.newClient().register(new JacksonFeature());
@@ -72,6 +76,14 @@ public class ConferenceServices {
     public List<ConferenceDTO> findAllByParticipant(Integer userId) {
 
         WebTarget target = client.target(ENDPOINT + "/conference/user/" + userId);
+
+        return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<ConferenceDTO>>() {
+        });
+    }
+
+    public List<ConferenceDTO> findAllByReviewer(Integer userId) {
+
+        WebTarget target = client.target(ENDPOINT + "/conference/getByReviewer/" + userId);
 
         return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<ConferenceDTO>>() {
         });

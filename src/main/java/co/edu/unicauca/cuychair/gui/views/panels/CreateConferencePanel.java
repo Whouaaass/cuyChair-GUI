@@ -261,21 +261,27 @@ public class CreateConferencePanel extends JPanel {
             return;
         }
         JOptionPane.showMessageDialog(this, "Conferencia creada exitosamente!", "Exito", JOptionPane.INFORMATION_MESSAGE);
-        System.out.println(response);
-        clearFields();
+        
+        
         for (int i = 0; i < listModelAuthors.size(); i++) {
             String email = listModelAuthors.get(i);
             try {
-                conferenceServices.addAuthor(response.getId(), userServices.getUserByEmail(email).getId());    
-            } catch (Exception e) {}
+                response = conferenceServices.addAuthor(response.getId(), userServices.getUserByEmail(email).getId());    
+            } catch (Exception e) {
+                System.out.printf("Error al agregar author %s\n", e.getMessage());
+            }
             
         }
         for (int i = 0; i < listModelReviewers.size(); i++) {
             String email = listModelReviewers.get(i);
             try {
-            conferenceServices.addReviewer(response.getId(), userServices.getUserByEmail(email).getId());
-            } catch (Exception e) {}
+            response = conferenceServices.addReviewer(response.getId(), userServices.getUserByEmail(email).getId());
+            } catch (Exception e) {
+                System.out.printf("Error al agregar revisor %s\n", e.getMessage());
+            }
         }
+        clearFields();
+        System.out.println(response);
     }
 
     public static void main(String[] args) {

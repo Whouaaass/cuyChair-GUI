@@ -4,6 +4,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -14,6 +15,8 @@ import javax.swing.JTextField;
 
 import co.edu.unicauca.cuychair.gui.api.dtos.conferenceAPI.ConferenceDTO;
 import co.edu.unicauca.cuychair.gui.api.dtos.paperAPI.PaperDTO;
+import co.edu.unicauca.cuychair.gui.api.services.ConferenceServices;
+import co.edu.unicauca.cuychair.gui.api.services.PaperReviewServices;
 import co.edu.unicauca.cuychair.gui.api.services.PaperServices;
 import co.edu.unicauca.cuychair.gui.context.AppContext;
 import co.edu.unicauca.cuychair.gui.context.SessionContext;
@@ -23,9 +26,12 @@ public class CreatePaperPanel extends JPanel {
     private JTextField txtSubtitle;
     private JTextArea txtAbstract;
     private JComboBox<ConferenceDTO> cmbConference;
+    private JButton btnSubmit; // Add this field
     
     public CreatePaperPanel() {
+        ConferenceServices conferenceServices = AppContext.getInstance().getConferenceService();
         initComponents();
+        conferenceServices.getAllConferences().forEach(cmbConference::addItem);
     }
     
     private void initComponents() {
@@ -77,11 +83,23 @@ public class CreatePaperPanel extends JPanel {
         gbc.gridx = 1;
         gbc.gridy = 3;
         add(cmbConference, gbc);
+        
+        // Add Submit Button
+        btnSubmit = new JButton("Submit Paper");
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.anchor = GridBagConstraints.EAST;
+        add(btnSubmit, gbc);
+        
+        // Add action listener
+        btnSubmit.addActionListener(e -> handleCreatePanel());
     }
 
 
     private void handleCreatePanel() {
         PaperServices paperServices = AppContext.getInstance().getPaperService();
+        PaperReviewServices paperReviewServices = AppContext.getInstance().getPaperReviewService();
+        
         // Create a new paper
         PaperDTO paper = new PaperDTO(
             0,
@@ -98,7 +116,8 @@ public class CreatePaperPanel extends JPanel {
             // Show error message
             JOptionPane.showMessageDialog(this, "Error creating paper", "Error", JOptionPane.ERROR_MESSAGE);
             return;
-        } 
+        }
+        
         // Show success message
         JOptionPane.showMessageDialog(this, "Paper created successfully");
     }

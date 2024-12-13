@@ -9,7 +9,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -19,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
+import co.edu.unicauca.cuychair.gui.api.services.ConferenceServices;
+import co.edu.unicauca.cuychair.gui.context.AppContext;
 import co.edu.unicauca.cuychair.gui.domain.Conference;
 import co.edu.unicauca.cuychair.gui.views.components.ConferenceCard;
 import co.edu.unicauca.cuychair.gui.views.components.GoBackWrapper;
@@ -34,52 +35,35 @@ public class ConferencePanel extends javax.swing.JPanel {
     private JPanel mainPanel;
 
     private CardLayout layout;
+    private JButton refreshButton;
 
     /**
      * Creates new form ConferencePanel
      */
-    public ConferencePanel() {        
+    public ConferencePanel() {
         initComponents();
-        testConferenceCards();
+        fillData();
     }
 
-    private void testConferenceCards() {
-        String[][] conferenceData = {
-            {"IAS", "No se que es esto", "more IAS"},
-            {"Minecon",
-                "this is great conference about Minecraft!!! <br> explore all the news about minecraft, and what it can possibly bring",
-                "more Minecon"},
-            {"TechFuture Expo",
-                "Explore the latest in technology and innovation. <br> Join us to see how the future of tech is unfolding!",
-                "more TechFuture Expo"},
-            {"EcoSummit",
-                "An inspiring event on sustainability and environmental innovation. <br> Learn how we can make a greener planet together.",
-                "more EcoSummit"},
-            {"AI & Robotics Summit",
-                "Dive into the world of AI and robotics! <br> See groundbreaking advancements and future possibilities.",
-                "more AI & Robotics Summit"},
-            {"Medical Breakthroughs",
-                "Join top researchers in healthcare and medicine. <br> Discover the latest in medical technology and innovation.",
-                "more Medical Breakthroughs"},
-            {"SpaceCon",
-                "A stellar conference for space enthusiasts! <br> Explore new discoveries, missions, and the future of space exploration.",
-                "more SpaceCon"}
-        };
+    private void fillData() {
 
-        for (String[] data : conferenceData) {
-            cards.add(new ConferenceCard(new Conference(data[0], data[1], new Date(), data[2], data[2])));
-        }
+        ConferenceServices conferenceServices = AppContext.getInstance().getConferenceService();
 
+        conferenceServices.getAllConferences().forEach(conference -> {
+            cards.add(new ConferenceCard(
+                    new Conference(conference.getTitle(), conference.getDescription(), conference.getDate(), "", "")
+            ));
+        });
         populateContentPanel(calculateColumns(scrollPanel.getWidth()));
     }
 
-    private void initComponents() {        
+    private void initComponents() {
         mainPanel = new JPanel();
         scrollPanel = new JScrollPane();
         contentPanel = new javax.swing.JPanel();
         optionsPanel = new javax.swing.JPanel();
         createConferenceButton = new JButton("Crear Conferencia");
-        
+        refreshButton = new JButton("Actualizar");
 
         setLayout(new CardLayout());
 
@@ -106,8 +90,13 @@ public class ConferencePanel extends javax.swing.JPanel {
         optionsPanel.setBorder(BorderFactory.createTitledBorder("Acciones"));
 
         optionsPanel.add(createConferenceButton);
+        optionsPanel.add(refreshButton);
 
         createConferenceButton.addActionListener(this::openCreateConferenceModal);
+        refreshButton.addActionListener(e -> {
+            cards.clear();
+            fillData();
+        });
 
         mainPanel.add(optionsPanel, BorderLayout.LINE_END);
 
@@ -118,7 +107,7 @@ public class ConferencePanel extends javax.swing.JPanel {
 
         add(createConferencePanel, "CreateConferencePanel");
         add(mainPanel, "mainPanel");
-        
+
         layout = (CardLayout) getLayout();
         layout.show(this, "mainPanel");
     }
@@ -161,12 +150,12 @@ public class ConferencePanel extends javax.swing.JPanel {
         contentPanel.repaint();
     }
 
-    private void openCreateConferenceModal(ActionEvent e) {        
+    private void openCreateConferenceModal(ActionEvent e) {
         layout.show(this, "CreateConferencePanel");
     }
 
-    private void handleGoBack(ActionEvent e) {        
-        layout.show(this, "mainPanel"); 
+    private void handleGoBack(ActionEvent e) {
+        layout.show(this, "mainPanel");
     }
 
     private JScrollPane scrollPanel;

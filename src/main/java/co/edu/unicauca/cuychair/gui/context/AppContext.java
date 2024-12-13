@@ -10,7 +10,7 @@ import co.edu.unicauca.cuychair.gui.api.services.UserServices;
  */
 public class AppContext {
 
-    private static AppContext instance;    
+    private static AppContext instance;
 
     private ConferenceServices conferenceServices;
     private PaperReviewServices paperReviewServices;
@@ -31,8 +31,6 @@ public class AppContext {
         return instance;
     }
 
-    
-
     public ConferenceServices getConferenceService() {
         return conferenceServices;
     }
@@ -48,8 +46,5 @@ public class AppContext {
     public UserServices getUserService() {
         return userServices;
     }
-
-    
-
 
 }
