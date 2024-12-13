@@ -1,8 +1,10 @@
 package co.edu.unicauca.cuychair.gui.api.dtos.paperAPI;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class PaperDTO {
     private int id;
     private String title;

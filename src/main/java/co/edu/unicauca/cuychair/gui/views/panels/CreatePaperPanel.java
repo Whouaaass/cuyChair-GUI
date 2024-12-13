@@ -6,16 +6,23 @@ import java.awt.Insets;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import co.edu.unicauca.cuychair.gui.api.dtos.conferenceAPI.ConferenceDTO;
+import co.edu.unicauca.cuychair.gui.api.dtos.paperAPI.PaperDTO;
+import co.edu.unicauca.cuychair.gui.api.services.PaperServices;
+import co.edu.unicauca.cuychair.gui.context.AppContext;
+import co.edu.unicauca.cuychair.gui.context.SessionContext;
+
 public class CreatePaperPanel extends JPanel {
     private JTextField txtTitle;
     private JTextField txtSubtitle;
     private JTextArea txtAbstract;
-    private JComboBox<String> cmbConference;
+    private JComboBox<ConferenceDTO> cmbConference;
     
     public CreatePaperPanel() {
         initComponents();
@@ -71,6 +78,30 @@ public class CreatePaperPanel extends JPanel {
         gbc.gridy = 3;
         add(cmbConference, gbc);
     }
+
+
+    private void handleCreatePanel() {
+        PaperServices paperServices = AppContext.getInstance().getPaperService();
+        // Create a new paper
+        PaperDTO paper = new PaperDTO(
+            0,
+            getPaperTitle(),
+            getPaperAbstract(),
+            getPaperSubtitle(),
+            SessionContext.getInstance().getUserId(), // Author ID
+            getSelectedConference().getId() // Conference ID
+        );
+        
+        // Add the paper to the database
+        PaperDTO paperDTO = paperServices.addPaper(paper);
+        if (paperDTO == null) {
+            // Show error message
+            JOptionPane.showMessageDialog(this, "Error creating paper", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } 
+        // Show success message
+        JOptionPane.showMessageDialog(this, "Paper created successfully");
+    }
     
     // Getters for form fields
     public String getPaperTitle() {
@@ -85,8 +116,8 @@ public class CreatePaperPanel extends JPanel {
         return txtAbstract.getText();
     }
     
-    public String getSelectedConference() {
-        return (String) cmbConference.getSelectedItem();
+    public ConferenceDTO getSelectedConference() {
+        return (ConferenceDTO) cmbConference.getSelectedItem();
     }
 }
 

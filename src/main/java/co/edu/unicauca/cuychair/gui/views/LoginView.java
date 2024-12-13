@@ -15,10 +15,18 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import co.edu.unicauca.cuychair.gui.api.dtos.userAPI.LoginDTO;
+import co.edu.unicauca.cuychair.gui.api.dtos.userAPI.UserDTO;
+import co.edu.unicauca.cuychair.gui.api.services.UserServices;
+import co.edu.unicauca.cuychair.gui.context.AppContext;
+import co.edu.unicauca.cuychair.gui.context.SessionContext;
+import co.edu.unicauca.cuychair.gui.domain.User;
+
 /**
  * Simple login view with username, password, and login button.
  */
 public class LoginView extends JPanel {
+
     private JTextField usernameField;
     private JPasswordField passwordField;
 
@@ -81,9 +89,11 @@ public class LoginView extends JPanel {
     }
 
     private void authenticate() {
+        UserServices userServices = AppContext.getInstance().getUserService();
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
 
+        /*
         if (username.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error",
                     JOptionPane.ERROR_MESSAGE);
@@ -95,7 +105,26 @@ public class LoginView extends JPanel {
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+         */
+        UserDTO result;
+
+        result = userServices.login(new LoginDTO(username, password));
+
+        if (result == null) {
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Save the user in the session context
+        SessionContext.getInstance().setUser(new User(
+                result.getId(),
+                result.getName(),
+                result.getLastName(),
+                result.getEmail(),
+                "none"
+        ));
+
         // Navigate to the main view
         JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         currentFrame.dispose();
@@ -112,7 +141,7 @@ public class LoginView extends JPanel {
         currentFrame.revalidate();
         currentFrame.repaint();
         currentFrame.pack();
-        
+
     }
 
     public static void main(String[] args) {

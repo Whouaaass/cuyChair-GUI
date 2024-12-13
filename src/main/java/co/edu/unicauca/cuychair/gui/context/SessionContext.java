@@ -1,25 +1,37 @@
 package co.edu.unicauca.cuychair.gui.context;
 
+import co.edu.unicauca.cuychair.gui.domain.User;
 import co.edu.unicauca.cuychair.gui.language.LanguageManager;
 
+
+// TODO: mudar LanguageManager a AppContext
 /**
  * Clase que es un singleton que contiene la información de la sesión actual del
  * usuario
  */
 public class SessionContext {
     private static SessionContext instance;
-    private Integer userId;
-    private String userName;
-    private String userRole;
-    private String userMail;
+
+    private User user;    
     private final LanguageManager languageManager;
 
     private SessionContext() {
-        userId = -1;
-        userName = "NoApi";
-        userRole = "NoApi";
-        userMail = "NoApi@noApi.com";
+        user = new User(
+            1,
+            "NoApi",
+            "NoApi",
+            "NoApi@mail.com",
+            "norole"
+        );        
         languageManager = new LanguageManager();
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     /**
@@ -40,7 +52,7 @@ public class SessionContext {
      * @return String id del usuario
      */
     public Integer getUserId() {
-        return userId;
+        return user.getId();
     }
 
     /**
@@ -49,7 +61,7 @@ public class SessionContext {
      * @param userId id del usuario
      */
     public void setUserId(Integer userId) {
-        this.userId = userId;
+        user.setId(userId);
     }
 
     /**
@@ -58,7 +70,7 @@ public class SessionContext {
      * @return nombre del usuario
      */
     public String getUserName() {
-        return userName;
+        return String.format("%s %s", user.getName(), user.getLastName());
     }
 
     /**
@@ -67,7 +79,7 @@ public class SessionContext {
      * @param userName nombre del usuario
      */
     public void setUserName(String userName) {
-        this.userName = userName;
+        user.setName(userName);
     }
 
     /**
@@ -76,7 +88,7 @@ public class SessionContext {
      * @return rol del usuario
      */
     public String getUserRole() {
-        return userRole;
+        return user.getRol();
     }
 
     /**
@@ -85,7 +97,7 @@ public class SessionContext {
      * @param userRole rol del usuario
      */
     public void setUserRole(String userRole) {
-        this.userRole = userRole;
+        user.setRol(userRole);
     }
 
 
@@ -95,7 +107,7 @@ public class SessionContext {
      * @return correo del usuario
      */
     public String getUserMail() {
-        return userMail;
+        return user.getEmail();
     }
 
     /**
@@ -104,7 +116,7 @@ public class SessionContext {
      * @param userMail correo del usuario
      */
     public void setUserMail(String userMail) {
-        this.userMail = userMail;
+        user.setEmail(userMail);
     }
     
     public LanguageManager getLanguageManager() {

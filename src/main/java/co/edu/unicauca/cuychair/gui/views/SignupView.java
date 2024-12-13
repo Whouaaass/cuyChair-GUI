@@ -13,6 +13,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import co.edu.unicauca.cuychair.gui.api.dtos.userAPI.UserDTO;
+import co.edu.unicauca.cuychair.gui.api.services.UserServices;
+import co.edu.unicauca.cuychair.gui.context.AppContext;
+
 public class SignupView extends JPanel {
     private JTextField nameField, lastNameField, emailField, phoneField;
     private JPasswordField passwordField, confirmPasswordField;
@@ -69,6 +73,7 @@ public class SignupView extends JPanel {
     }
 
     private void handleSignup() {
+        UserServices userServices = AppContext.getInstance().getUserService();
         String name = nameField.getText();
         String lastName = lastNameField.getText();
         String email = emailField.getText();
@@ -89,8 +94,28 @@ public class SignupView extends JPanel {
             return;
         }
 
-        // TODO: Add your signup logic here
+        UserDTO inputUser = new UserDTO();
+        inputUser.setName(name);
+        inputUser.setLastName(lastName);
+        inputUser.setEmail(email);
+        try {
+            inputUser.setPhone(Integer.parseInt(name));    
+        } catch (IllegalArgumentException e) {
+            inputUser.setPhone(0);
+        }        
+        inputUser.setPassword(password);       
+
+        UserDTO user = userServices.addUser(inputUser);
+
+        if (user == null) {
+            JOptionPane.showMessageDialog(this, "Error al registrar el usuario!", 
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         JOptionPane.showMessageDialog(this, "Registro exitoso!");
+
+        handleGoToLogin();
     }
 
     private void handleGoToLogin() {
@@ -100,8 +125,7 @@ public class SignupView extends JPanel {
         window.setTitle("Iniciar sesión");
         window.revalidate();
         window.repaint();
-        window.pack();
-        
+        window.pack();        
     }
 
 }

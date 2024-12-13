@@ -1,8 +1,10 @@
 package co.edu.unicauca.cuychair.gui.utils;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+
 
 public class DateUtils {
 
@@ -35,6 +37,14 @@ public class DateUtils {
     public static String formatToPrettyDate(Date date) {
         return prettyDateFormatter.format(date);
     }
+
+    public static DateFormat getIsoDateFormatter() {
+        return isoDateFormatter;
+    }
+
+    public static DateFormat getPrettyDateFormatter() {
+        return prettyDateFormatter;
+    }    
 
     
     /** 

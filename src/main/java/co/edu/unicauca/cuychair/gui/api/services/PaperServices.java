@@ -25,7 +25,7 @@ public class PaperServices {
     private Client client;
 
     public PaperServices() {
-        this.endPoint = "http://localhost:8094/Paper";
+        this.endPoint = "http://localhost:8094/api";
         this.client = ClientBuilder.newClient().register(new JacksonFeature());
     }
 

@@ -9,6 +9,9 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.util.Date;
+import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -17,6 +20,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -24,6 +28,16 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
+import co.edu.unicauca.cuychair.gui.api.dtos.conferenceAPI.ConferenceDTO;
+import co.edu.unicauca.cuychair.gui.api.services.ConferenceServices;
+import co.edu.unicauca.cuychair.gui.api.services.UserServices;
+import co.edu.unicauca.cuychair.gui.context.AppContext;
+import co.edu.unicauca.cuychair.gui.context.SessionContext;
+import co.edu.unicauca.cuychair.gui.utils.DateLabelFormatter;
 import co.edu.unicauca.cuychair.gui.views.modals.InputModal;
 
 public class CreateConferencePanel extends JPanel {
@@ -44,6 +58,7 @@ public class CreateConferencePanel extends JPanel {
     private JTextField txtCity;
     private JTextField txtDate;
     private JTextArea txtDescription;
+    private JDatePickerImpl datePicker;
     private JList<String> listReviewers;
     private DefaultListModel<String> listModelReviewers;
     private JList<String> listAuthors;
@@ -94,7 +109,16 @@ public class CreateConferencePanel extends JPanel {
         addFormField(inputPanel, "Titulo:", txtTitle, gbc, 0);
         addFormField(inputPanel, "Tema:", txtSubject, gbc, 1);
         addFormField(inputPanel, "Ciudad:", txtCity, gbc, 2);
-        addFormField(inputPanel, "Fecha:", txtDate, gbc, 3);
+        UtilDateModel model = new UtilDateModel();
+        JDatePanelImpl datePanel = new JDatePanelImpl(model, new Properties() {
+            {
+                put("text.today", "Hoy");
+                put("text.month", "Mes");
+                put("text.year", "Año");
+            }
+        });
+        datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+        addFormField(inputPanel, "Fecha:", datePicker, gbc, 3);
 
         // Description area
         gbc.gridy = 4;
@@ -121,7 +145,7 @@ public class CreateConferencePanel extends JPanel {
         JButton btnRemoveReviewer = new JButton("Remover");
         JPanel reviewersButtonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnAddReviewer.addActionListener(
-            l -> addPersonThroughModal("Ingrese el correo del revisor:", listModelReviewers)
+                l -> addPersonThroughModal("Ingrese el correo del revisor:", listModelReviewers)
         );
         btnRemoveReviewer.addActionListener(l -> removeSelectedIndex(listReviewers, listModelReviewers));
         reviewersButtonsPanel.add(btnAddReviewer);
@@ -146,6 +170,7 @@ public class CreateConferencePanel extends JPanel {
         listsPanel.add(authorsPanel);
         // Button panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        btnSubmit.addActionListener(this::handleCreateConference);
         buttonPanel.add(btnSubmit);
 
         // Add all panels to main panel
@@ -186,6 +211,70 @@ public class CreateConferencePanel extends JPanel {
         int selectedIndex = list.getSelectedIndex();
         if (selectedIndex != -1) {
             listModel.remove(selectedIndex);
+        }
+    }
+
+    private void clearFields() {
+        txtTitle.setText("");
+        txtSubject.setText("");
+        txtCity.setText("");
+        txtDate.setText("");
+        txtDescription.setText("");
+        listModelReviewers.clear();
+        listModelAuthors.clear();
+    }
+
+    private void handleCreateConference(ActionEvent evt) {
+        ConferenceServices conferenceServices = AppContext.getInstance().getConferenceService();
+        UserServices userServices = AppContext.getInstance().getUserService();
+        String title = txtTitle.getText();
+        String subject = txtSubject.getText();
+        String city = txtCity.getText();
+        Date date = (Date) datePicker.getModel().getValue();
+        String description = txtDescription.getText();
+
+        System.out.println("Creating conference...");
+        System.out.println("Title: " + title);
+        System.out.println("Subject: " + subject);
+        System.out.println("City: " + city);
+        System.out.println("Date: " + date);
+        System.out.println("Description: " + description);
+        System.out.println("Reviewers: " + listModelReviewers);
+        System.out.println("Authors: " + listModelAuthors);
+
+        if (title.isEmpty() || subject.isEmpty() || city.isEmpty() || date == null || description.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Todos los campos son requeridos!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        ConferenceDTO response = conferenceServices.addConference(
+                city,
+                title,
+                subject,
+                date,
+                description,
+                SessionContext.getInstance().getUserId()
+        );
+        if (response == null) {
+            JOptionPane.showMessageDialog(this, "Hubo un error al crear la conferencia", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        JOptionPane.showMessageDialog(this, "Conferencia creada exitosamente!", "Exito", JOptionPane.INFORMATION_MESSAGE);
+        System.out.println(response);
+        clearFields();
+        for (int i = 0; i < listModelAuthors.size(); i++) {
+            String email = listModelAuthors.get(i);
+            try {
+                conferenceServices.addAuthor(response.getId(), userServices.getUserByEmail(email).getId());    
+            } catch (Exception e) {}
+            
+        }
+        for (int i = 0; i < listModelReviewers.size(); i++) {
+            String email = listModelReviewers.get(i);
+            try {
+            conferenceServices.addReviewer(response.getId(), userServices.getUserByEmail(email).getId());
+            } catch (Exception e) {}
         }
     }
 

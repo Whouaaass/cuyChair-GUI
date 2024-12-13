@@ -127,6 +127,7 @@ public class ConferencePanel extends javax.swing.JPanel {
      * @param evt
      */
     private void scrollPanelComponentResized(java.awt.event.ComponentEvent evt) {
+        evt.getSource();
         int columns = calculateColumns(scrollPanel.getWidth());
         populateContentPanel(columns);
     }
